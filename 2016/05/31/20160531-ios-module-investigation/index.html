@@ -6,7 +6,7 @@
 <h2 id="二、为什么要组件化？"><a href="#二、为什么要组件化？" class="headerlink" title="二、为什么要组件化？"></a>二、为什么要组件化？</h2><p>从两个方面论述：</p>
 <h3 id="组件化是为了解决什么问题？"><a href="#组件化是为了解决什么问题？" class="headerlink" title="组件化是为了解决什么问题？"></a>组件化是为了解决什么问题？</h3><p>一个 APP 有多个模块，模块之间会通信，互相调用，如我们的证券app，有首页、行情、资讯、我的等模块。这些模块会互相调用，例如 首页底部需要展示部分资讯、行情；行情底部需要展示个股资讯；资讯详情页需要跳转到行情，等等。</p>
 <p>一般我们是怎样调用呢，以首页调用资讯为例，会这样写：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">#import &quot;HomeViewController.h&quot;</div><div class="line">#import &quot;NewsViewController.h&quot;</div><div class="line"></div><div class="line">@implementation HomeViewController</div><div class="line"></div><div class="line">+ (void)gotoNews &#123;</div><div class="line"></div><div class="line"> NewsViewController *detailVC = [[NewsViewController alloc] initWithStockCode:self.codeNum];</div><div class="line"> [self.navigationController.pushViewController:detailVC animated:YES];</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;HomeViewController.h&quot;</span><br><span class="line">#import &quot;NewsViewController.h&quot;</span><br><span class="line"></span><br><span class="line">@implementation HomeViewController</span><br><span class="line"></span><br><span class="line">+ (void)gotoNews &#123;</span><br><span class="line"></span><br><span class="line"> NewsViewController *detailVC = [[NewsViewController alloc] initWithStockCode:self.codeNum];</span><br><span class="line"> [self.navigationController.pushViewController:detailVC animated:YES];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
 <p>看起来挺好，这样做简单明了，没有多余的东西，项目初期推荐这样快速开发，但到了项目越来越庞大，这种方式会有什么问题呢？</p>
 <ul>
 <li>问题1，每个模块都离不开其他模块，互相依赖粘在一起成为一坨：</li>
@@ -64,16 +64,16 @@
 </blockquote>
 <p>对于业务模块来说，考虑到旧有代码可能没有相关的横向解耦策略，业务模块之间的依赖会非常复杂，难以单独进行拆分，因此我们采用的方法是首先从 group 角度进行重新整理。</p>
 <p>对业务量很大的工程来说，我个人更加推荐“业务-分层”这样的结构，而不是“分层-业务”，即类似下面的 group 结构：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">- BusinessA</div><div class="line">  - Model</div><div class="line">  - View</div><div class="line">  - Controller</div><div class="line">  - Store</div><div class="line">- BusinessB</div><div class="line">  - Model</div><div class="line">  - View</div><div class="line">  - Controller</div><div class="line">  -Store</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- BusinessA</span><br><span class="line">  - Model</span><br><span class="line">  - View</span><br><span class="line">  - Controller</span><br><span class="line">  - Store</span><br><span class="line">- BusinessB</span><br><span class="line">  - Model</span><br><span class="line">  - View</span><br><span class="line">  - Controller</span><br><span class="line">  -Store</span><br></pre></td></tr></table></figure>
 <p>而非目前项目中采用的：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">- Controllers</div><div class="line">  - BusinessA_Controller</div><div class="line">  - BusinessB_Controller</div><div class="line">- Views</div><div class="line">  - BusinessA_View</div><div class="line">  - BusinessB_View</div><div class="line">- Models</div><div class="line">  - BusinessA_Model</div><div class="line">  - BusinessB_Model</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- Controllers</span><br><span class="line">  - BusinessA_Controller</span><br><span class="line">  - BusinessB_Controller</span><br><span class="line">- Views</span><br><span class="line">  - BusinessA_View</span><br><span class="line">  - BusinessB_View</span><br><span class="line">- Models</span><br><span class="line">  - BusinessA_Model</span><br><span class="line">  - BusinessB_Model</span><br></pre></td></tr></table></figure>
 <h3 id="组件化的技术难点？"><a href="#组件化的技术难点？" class="headerlink" title="组件化的技术难点？"></a>组件化的技术难点？</h3><blockquote>
 <p>组件化的实施，直观上看，只是需要将各业务组件的代码放到各自的文件夹或者 jar包里就行了。</p>
 </blockquote>
 <p>这里引出的是：</p>
 <h4 id="1、组件的拆分方式问题："><a href="#1、组件的拆分方式问题：" class="headerlink" title="1、组件的拆分方式问题："></a>1、组件的拆分方式问题：</h4><p>可以利用CocoaPods 配合 git 做代码版本管理，独立业务模块单独成库。</p>
 <p>但这仅仅是物理上拆分了，拆分后的代码编译是肯定通不过的，因为如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">#import &quot;MainViewController.h&quot;</div><div class="line">#import &quot;HomeViewController.h&quot;</div><div class="line">#import &quot;NewsViewController.h&quot;</div><div class="line">#import &quot;MeViewController.h&quot;</div><div class="line">#import ...</div><div class="line"></div><div class="line">@implementation MainViewController</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#import &quot;MainViewController.h&quot;</span><br><span class="line">#import &quot;HomeViewController.h&quot;</span><br><span class="line">#import &quot;NewsViewController.h&quot;</span><br><span class="line">#import &quot;MeViewController.h&quot;</span><br><span class="line">#import ...</span><br><span class="line"></span><br><span class="line">@implementation MainViewController</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
 <p><code>MainViewController</code> 会找不到依赖的其它各个模块的头文件而报错。这里引出的又是另一个问题：</p>
 <h4 id="2、组件间如何解耦？"><a href="#2、组件间如何解耦？" class="headerlink" title="2、组件间如何解耦？"></a>2、组件间如何解耦？</h4><p>组件间解耦，是组件化必须解决的一个问题。换句话说，就是如何解除业务模块间的横向依赖。还是拿上边举得例子来说：</p>
 <p>App的根视图<code>MainViewController</code>需要管理首页、新闻、我的等等页面时，如何做到 <code>MainViewController</code> 中，不用去 <code>import</code>这一大堆 <code>XXViewController</code> ?</p>
@@ -85,14 +85,14 @@
 <p><img src="http://upload-images.jianshu.io/upload_images/332029-4bbac402d8344090.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="单向依赖.png"></p>
 <p>对此，可以参考业内的流行方案：</p>
 <ul>
-<li><p>基于 URL Router、ModuleManager<br>  代表：<a href="http://limboy.me/ios/2016/03/10/mgj-components.html" target="_blank" rel="external">蘑菇街 Limboy</a></p>
+<li><p>基于 URL Router、ModuleManager<br>  代表：<a href="http://limboy.me/ios/2016/03/10/mgj-components.html" target="_blank" rel="noopener">蘑菇街 Limboy</a></p>
 </li>
-<li><p>基于 Target-Action、Runtime、Category<br>  代表：<a href="http://casatwy.com/iOS-Modulization.html?hmsr=toutiao.io&amp;utm_medium=toutiao.io&amp;utm_source=toutiao.io" target="_blank" rel="external">安居客 casa</a></p>
+<li><p>基于 Target-Action、Runtime、Category<br>  代表：<a href="http://casatwy.com/iOS-Modulization.html?hmsr=toutiao.io&amp;utm_medium=toutiao.io&amp;utm_source=toutiao.io" target="_blank" rel="noopener">安居客 casa</a></p>
 </li>
 </ul>
 <p>具体实现方案较为抽象，这里暂时先不详细展开论述，可以参见Demo：</p>
-<p><a href="https://github.com/yehot/CTMediator" target="_blank" rel="external">Demo1 基于 Target-Action</a></p>
-<p><a href="https://github.com/yehot/routable-ios" target="_blank" rel="external">Demo2 基于 URL Router</a></p>
+<p><a href="https://github.com/yehot/CTMediator" target="_blank" rel="noopener">Demo1 基于 Target-Action</a></p>
+<p><a href="https://github.com/yehot/routable-ios" target="_blank" rel="noopener">Demo2 基于 URL Router</a></p>
 <h2 id="四、其它"><a href="#四、其它" class="headerlink" title="四、其它"></a>四、其它</h2><h3 id="开发流程控制"><a href="#开发流程控制" class="headerlink" title="开发流程控制"></a>开发流程控制</h3><blockquote>
 <p>托管平台选择</p>
 </blockquote>
@@ -102,29 +102,29 @@
 <p>这个流程是完全分布式的，也就是说可以同时有多个贡献者在不同的分支进行工作，最后统一合并到主分支上，实现并行协作。</p>
 <p>同时在审核 Pull Request 阶段，除了人工审核代码之外，Github 还加入了对于持续集成的支持，可以检测这个 Pull Request 是不是能够通过测试的，进一步保证了代码的质量。</p>
 <h3 id="组件维护问题？"><a href="#组件维护问题？" class="headerlink" title="组件维护问题？"></a>组件维护问题？</h3><p>待补充</p>
-<h2 id="五、参考资料："><a href="#五、参考资料：" class="headerlink" title="五、参考资料："></a>五、参考资料：</h2><h3 id="相关技术博客："><a href="#相关技术博客：" class="headerlink" title="相关技术博客："></a>相关技术博客：</h3><p>1、<a href="http://casatwy.com/iOS-Modulization.html?hmsr=toutiao.io&amp;utm_medium=toutiao.io&amp;utm_source=toutiao.io" target="_blank" rel="external">iOS应用架构谈 组件化方案</a></p>
-<p>2、<a href="http://limboy.me/ios/2016/03/10/mgj-components.html" target="_blank" rel="external">蘑菇街 App 的组件化之路</a></p>
-<p><a href="http://limboy.me/ios/2016/03/14/mgj-components-continued.html" target="_blank" rel="external">蘑菇街 App 的组件化之路·续</a></p>
-<p>3、<a href="http://blog.cnbang.net/tech/3080/" target="_blank" rel="external">iOS 组件化方案探索</a></p>
-<p>4、<a href="http://www.reviewcode.cn/article.html?reviewId=20" target="_blank" rel="external">《iOS应用架构谈 组件化方案》和《蘑菇街 App 的组件化之路》的阅读指导</a></p>
-<p>5、<a href="https://skyline75489.github.io/post/2016-3-16_ios_module_design.html" target="_blank" rel="external">浅析 iOS 应用组件化设计</a></p>
-<p>6、<a href="http://chuansong.me/n/320688951236" target="_blank" rel="external">糯米移动组件架构演进之路</a></p>
-<p>7、<a href="https://www.sdk.cn/news/2023" target="_blank" rel="external">饿了么移动APP的架构演进</a></p>
-<p>8、<a href="https://mp.weixin.qq.com/s?__biz=MzA3ODg4MDk0Ng%3D%3D&amp;idx=1&amp;mid=402854111&amp;sn=5876e615fabd6d921285d904e16670fb" target="_blank" rel="external">滴滴出行iOS客户端架构演进之路</a></p>
-<p>9、<a href="http://www.aliog.com/101363.html" target="_blank" rel="external">ios业务模块间互相跳转的解耦方案</a></p>
-<p>10、<a href="http://cdn0.jianshu.io/p/afb9b52143d4" target="_blank" rel="external">iOS组件化思路－大神博客研读和思考</a></p>
-<p>11、<a href="https://blog.cnbluebox.com/blog/2015/11/28/module-and-decoupling/" target="_blank" rel="external">模块化与解耦</a></p>
-<h3 id="相关解决方案"><a href="#相关解决方案" class="headerlink" title="相关解决方案"></a>相关解决方案</h3><p>1、<a href="https://github.com/casatwy/CTMediator" target="_blank" rel="external">casatwy/CTMediator</a></p>
-<p>2、<a href="https://github.com/mogujie/MGJRouter" target="_blank" rel="external">mogujie/MGJRouter</a></p>
-<p>3、<a href="https://github.com/joeldev/JLRoutes" target="_blank" rel="external">joeldev/JLRoutes</a></p>
-<p>4、<a href="https://github.com/Huohua/HHRouter" target="_blank" rel="external">Huohua/HHRouter</a></p>
-<p>5、<a href="https://github.com/clayallsopp/routable-ios" target="_blank" rel="external">clayallsopp/routable-ios</a></p>
-<p>6、<a href="https://github.com/Lede-Inc/LDBusBundle_IOS" target="_blank" rel="external">Lede-Inc/LDBusBundle_IOS</a></p>
-<h3 id="私有Cocoapods实施方案"><a href="#私有Cocoapods实施方案" class="headerlink" title="私有Cocoapods实施方案"></a>私有Cocoapods实施方案</h3><p>1、<a href="http://blog.wtlucky.com/blog/2015/02/26/create-private-podspec/" target="_blank" rel="external">使用Cocoapods创建私有podspec - GeekerProbe</a></p>
-<p>2、<a href="http://www.pluto-y.com/cocoapod-private-pods-and-module-manager/" target="_blank" rel="external">Cocoapods系列教程(三)——私有库管理和模块化管理</a></p>
-<p>3、<a href="http://www.jianshu.com/p/196f66d31543" target="_blank" rel="external">iOS组件化实践方案－LDBusMediator炼就</a></p>
-<p>4、<a href="https://skyline75489.github.io/post/2016-3-19_ios_modularization_practice.html" target="_blank" rel="external">基于 CocoaPods 和 Git 的 iOS 工程组件化实践</a></p>
-<p>5、<a href="https://blog.cnbluebox.com/blog/2014/03/31/cocoapodsdai-ma-guan-li/" target="_blank" rel="external">Cocoapods代码管理</a></p>
-<p>6、<a href="http://www.liuchungui.com/blog/2015/10/19/cocoapodschuang-jian-si-you-pods/" target="_blank" rel="external">CocoaPods创建私有Pods</a></p>
-<p>7、<a href="http://www.jianshu.com/p/ddc2490bff9f" target="_blank" rel="external">如何创建私有 CocoaPods 仓库</a></p>
+<h2 id="五、参考资料："><a href="#五、参考资料：" class="headerlink" title="五、参考资料："></a>五、参考资料：</h2><h3 id="相关技术博客："><a href="#相关技术博客：" class="headerlink" title="相关技术博客："></a>相关技术博客：</h3><p>1、<a href="http://casatwy.com/iOS-Modulization.html?hmsr=toutiao.io&amp;utm_medium=toutiao.io&amp;utm_source=toutiao.io" target="_blank" rel="noopener">iOS应用架构谈 组件化方案</a></p>
+<p>2、<a href="http://limboy.me/ios/2016/03/10/mgj-components.html" target="_blank" rel="noopener">蘑菇街 App 的组件化之路</a></p>
+<p><a href="http://limboy.me/ios/2016/03/14/mgj-components-continued.html" target="_blank" rel="noopener">蘑菇街 App 的组件化之路·续</a></p>
+<p>3、<a href="http://blog.cnbang.net/tech/3080/" target="_blank" rel="noopener">iOS 组件化方案探索</a></p>
+<p>4、<a href="http://www.reviewcode.cn/article.html?reviewId=20" target="_blank" rel="noopener">《iOS应用架构谈 组件化方案》和《蘑菇街 App 的组件化之路》的阅读指导</a></p>
+<p>5、<a href="https://skyline75489.github.io/post/2016-3-16_ios_module_design.html" target="_blank" rel="noopener">浅析 iOS 应用组件化设计</a></p>
+<p>6、<a href="http://chuansong.me/n/320688951236" target="_blank" rel="noopener">糯米移动组件架构演进之路</a></p>
+<p>7、<a href="https://www.sdk.cn/news/2023" target="_blank" rel="noopener">饿了么移动APP的架构演进</a></p>
+<p>8、<a href="https://mp.weixin.qq.com/s?__biz=MzA3ODg4MDk0Ng%3D%3D&amp;idx=1&amp;mid=402854111&amp;sn=5876e615fabd6d921285d904e16670fb" target="_blank" rel="noopener">滴滴出行iOS客户端架构演进之路</a></p>
+<p>9、<a href="http://www.aliog.com/101363.html" target="_blank" rel="noopener">ios业务模块间互相跳转的解耦方案</a></p>
+<p>10、<a href="http://cdn0.jianshu.io/p/afb9b52143d4" target="_blank" rel="noopener">iOS组件化思路－大神博客研读和思考</a></p>
+<p>11、<a href="https://blog.cnbluebox.com/blog/2015/11/28/module-and-decoupling/" target="_blank" rel="noopener">模块化与解耦</a></p>
+<h3 id="相关解决方案"><a href="#相关解决方案" class="headerlink" title="相关解决方案"></a>相关解决方案</h3><p>1、<a href="https://github.com/casatwy/CTMediator" target="_blank" rel="noopener">casatwy/CTMediator</a></p>
+<p>2、<a href="https://github.com/mogujie/MGJRouter" target="_blank" rel="noopener">mogujie/MGJRouter</a></p>
+<p>3、<a href="https://github.com/joeldev/JLRoutes" target="_blank" rel="noopener">joeldev/JLRoutes</a></p>
+<p>4、<a href="https://github.com/Huohua/HHRouter" target="_blank" rel="noopener">Huohua/HHRouter</a></p>
+<p>5、<a href="https://github.com/clayallsopp/routable-ios" target="_blank" rel="noopener">clayallsopp/routable-ios</a></p>
+<p>6、<a href="https://github.com/Lede-Inc/LDBusBundle_IOS" target="_blank" rel="noopener">Lede-Inc/LDBusBundle_IOS</a></p>
+<h3 id="私有Cocoapods实施方案"><a href="#私有Cocoapods实施方案" class="headerlink" title="私有Cocoapods实施方案"></a>私有Cocoapods实施方案</h3><p>1、<a href="http://blog.wtlucky.com/blog/2015/02/26/create-private-podspec/" target="_blank" rel="noopener">使用Cocoapods创建私有podspec - GeekerProbe</a></p>
+<p>2、<a href="http://www.pluto-y.com/cocoapod-private-pods-and-module-manager/" target="_blank" rel="noopener">Cocoapods系列教程(三)——私有库管理和模块化管理</a></p>
+<p>3、<a href="http://www.jianshu.com/p/196f66d31543" target="_blank" rel="noopener">iOS组件化实践方案－LDBusMediator炼就</a></p>
+<p>4、<a href="https://skyline75489.github.io/post/2016-3-19_ios_modularization_practice.html" target="_blank" rel="noopener">基于 CocoaPods 和 Git 的 iOS 工程组件化实践</a></p>
+<p>5、<a href="https://blog.cnbluebox.com/blog/2014/03/31/cocoapodsdai-ma-guan-li/" target="_blank" rel="noopener">Cocoapods代码管理</a></p>
+<p>6、<a href="http://www.liuchungui.com/blog/2015/10/19/cocoapodschuang-jian-si-you-pods/" target="_blank" rel="noopener">CocoaPods创建私有Pods</a></p>
+<p>7、<a href="http://www.jianshu.com/p/ddc2490bff9f" target="_blank" rel="noopener">如何创建私有 CocoaPods 仓库</a></p>
 </div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2016-05-31</span><i class="fa fa-tag"></i><a class="tag" href="/categories/iOS组件化/" title="iOS组件化">iOS组件化 </a><a class="tag" href="/tags/CocoaPods/" title="CocoaPods">CocoaPods </a></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" href="http://twitter.com/home?status=,http://yehot.github.io/2016/05/31/20160531-ios-module-investigation/,yehot的技术博客,iOS组件化方案调研,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2016/07/02/20160702-rutime-method-swiizzling/" title="runtime入门系列之——方法替换">Post Anterior</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2016/04/05/20160405-YYFPSLabel-source-read/" title="iOS查看屏幕帧数工具--YYFPSLabel">Próximo post</a></li></ul></div></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>

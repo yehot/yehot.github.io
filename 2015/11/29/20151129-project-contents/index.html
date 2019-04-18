@@ -3,17 +3,21 @@
 
 面试iOS开发，面试官竟然问他『怎么分目录结构』的，而且还具体问到每个子目录的文件名。
 
+
+
+
 清晰的目录结构，可让人一眼知道对应目录的职能，这也能体现开发者的经验和架构能力。
 
 
-
-  恰巧，有一次我"><meta name="keywords"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title><a href="/">yehot的技术博客</a></h3><div class="description"><p>野生iOS程序猿</p></div></div></div><ul class="social-links"></ul><div class="footer"><a target="_blank" href="/"><span>Theme by </span></a><a href="https://www.caicai.me"> CaiCai </a><span>&</span><a href="https://github.com/Ben02/hexo-theme-Anatole"> Ben</a><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">Home</a></li><li><a href="/about">Sobre</a></li><li><a href="/archives">Arquivo</a></li><li><a href="/links">Links</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>iOS工程目录结构的思考</a></h3></div><div class="post-content"><p>#一、前言<br>  在 <a href="http://www.jianshu.com/users/368a8cd349af/latest_articles" target="_blank" rel="external">@汉斯哈哈哈</a> 的 <a href="http://www.jianshu.com/p/77a948bcbc38" target="_blank" rel="external">iOS 项目的目录结构能看出你的开发经验</a> 这篇博客里提到一点：</p>
+  恰巧，有一"><meta name="keywords"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title><a href="/">yehot的技术博客</a></h3><div class="description"><p>野生iOS程序猿</p></div></div></div><ul class="social-links"></ul><div class="footer"><a target="_blank" href="/"><span>Theme by </span></a><a href="https://www.caicai.me"> CaiCai </a><span>&</span><a href="https://github.com/Ben02/hexo-theme-Anatole"> Ben</a><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">Home</a></li><li><a href="/about">Sobre</a></li><li><a href="/archives">Arquivo</a></li><li><a href="/links">Links</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>iOS工程目录结构的思考</a></h3></div><div class="post-content"><p>#一、前言<br>  在 <a href="http://www.jianshu.com/users/368a8cd349af/latest_articles" target="_blank" rel="noopener">@汉斯哈哈哈</a> 的 <a href="http://www.jianshu.com/p/77a948bcbc38" target="_blank" rel="noopener">iOS 项目的目录结构能看出你的开发经验</a> 这篇博客里提到一点：</p>
 <blockquote>
 <ul>
-<li><p>面试iOS开发，面试官竟然问他『<strong>怎么分目录结构</strong>』的，而且还具体问到每个子目录的文件名。</p>
-</li>
-<li><p>清晰的目录结构，可让人一眼知道对应目录的职能，这也能体现开发者的经验和架构能力。</p>
-</li>
+<li>面试iOS开发，面试官竟然问他『<strong>怎么分目录结构</strong>』的，而且还具体问到每个子目录的文件名。</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>清晰的目录结构，可让人一眼知道对应目录的职能，这也能体现开发者的经验和架构能力。</li>
 </ul>
 </blockquote>
 <p>  恰巧，有一次我参加面试，也被问到过类似的问题。<br>  在日常工作中我自己对此也深有感触，《代码大全》里有个观点：</p>
@@ -29,13 +33,13 @@
 <p>###可能导致的问题：</p>
 <p>  <strong>1、</strong>一个糟糕的目录会让人对工程瞬间失去兴趣。<br>  <strong>2、</strong>如果打开一个工程，没办法通过阅读目录结构获得对整个项目结构的大致的了解，这样的目录结构就是不够合理的。这样会导致在不熟悉项目的情况下，很难明白各个模块、各个文件夹里的类的作用。<br>  <strong>3、</strong>目录结构如果没有统一的规范，类文件的命名也很难有相应的规则来进行约束；<br>  <strong>4、</strong>对于新加入项目的人，如果需要新增一些类文件，会不知道究竟该放在哪个目录下合适，只能先”凭感觉”随便找个地方一放。这样的工程维护起来，只会越来越乱。</p>
 <p>#三、我的个人经验</p>
-<p><strong>1、</strong> 简叔在 <a href="http://www.jianshu.com/p/77a948bcbc38" target="_blank" rel="external">iOS 项目的目录结构能看出你的开发经验</a> 一文下的评论：</p>
+<p><strong>1、</strong> 简叔在 <a href="http://www.jianshu.com/p/77a948bcbc38" target="_blank" rel="noopener">iOS 项目的目录结构能看出你的开发经验</a> 一文下的评论：</p>
 <blockquote>
 <p><img src="http://upload-images.jianshu.io/upload_images/332029-ef0bc5110921e153.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
 </blockquote>
 <p>  看到这条评论不胜赞同。<br>  我自己就很喜欢整理，不论是电脑上的盘符目录，还是印象笔记下的笔记本目录，我都习惯于编个号、定期整理。</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/332029-296141c755a00794.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt><br>  这样一般我要找一个存在自己电脑上的东西，在找之前，头脑里就已经基本想到它会在那个大目录、哪个子目录下。配合搜索功能，很少会找不到文件。<br>  同时，存的时候也不会随便找个地方一放，乱七八糟。基本已经形成一套自己熟悉的规则了。</p>
-<p><strong>2、</strong> <a href="http://mtydev.net/?p=1" target="_blank" rel="external">高质量iOS开发系列之(一)－iOS项目工程及目录结构</a> 中提高的几个基本原则：</p>
+<p><strong>2、</strong> <a href="http://mtydev.net/?p=1" target="_blank" rel="noopener">高质量iOS开发系列之(一)－iOS项目工程及目录结构</a> 中提高的几个基本原则：</p>
 <blockquote>
 <ul>
 <li>一个合理的目录结构应该是清晰的，让人一眼就能了解目录职责，并且是容易扩展的。</li>
@@ -49,8 +53,8 @@
 <li>对于基础库，保证质量，通用性，可扩展性，易用性，可以不断迭代</li>
 </ul>
 </blockquote>
-<p>  此外，该文章中讲到的各模块注意事项，非常切合iOS开发的实际。建议<a href="http://mtydev.net/?p=1" target="_blank" rel="external">阅读原文</a>，我就不在这里搬运了。</p>
-<p><strong>3、</strong>  <a href="http://www.jianshu.com/users/368a8cd349af/latest_articles" target="_blank" rel="external">@汉斯哈哈哈</a> 提到的两种常用目录结构的分法：</p>
+<p>  此外，该文章中讲到的各模块注意事项，非常切合iOS开发的实际。建议<a href="http://mtydev.net/?p=1" target="_blank" rel="noopener">阅读原文</a>，我就不在这里搬运了。</p>
+<p><strong>3、</strong>  <a href="http://www.jianshu.com/users/368a8cd349af/latest_articles" target="_blank" rel="noopener">@汉斯哈哈哈</a> 提到的两种常用目录结构的分法：</p>
 <blockquote>
 <p>1.主目录按照业务分类，内目录按照模块分类<br>2.主目录按照模块分类，内目录按照业务分类</p>
 </blockquote>
@@ -78,6 +82,6 @@
 <p>###注：<br>  以上只是我个人的一些经验，总结的不是很完善。同时有很多地方借鉴了以下文章的观点。有什么能改进的地方，欢迎在评论区讨论！</p>
 <p><br></p>
 <blockquote>
-<p>###参考：<br><a href="http://mtydev.net/?p=1" target="_blank" rel="external">高质量iOS开发系列之(一)－iOS项目工程及目录结构</a><br><a href="http://limboy.me/ios/2013/09/23/build-ios-application.html" target="_blank" rel="external">iOS项目的目录结构和开发流程</a><br><a href="http://www.jianshu.com/p/77a948bcbc38" target="_blank" rel="external">iOS 项目的目录结构能看出你的开发经验</a></p>
+<p>###参考：<br><a href="http://mtydev.net/?p=1" target="_blank" rel="noopener">高质量iOS开发系列之(一)－iOS项目工程及目录结构</a><br><a href="http://limboy.me/ios/2013/09/23/build-ios-application.html" target="_blank" rel="noopener">iOS项目的目录结构和开发流程</a><br><a href="http://www.jianshu.com/p/77a948bcbc38" target="_blank" rel="noopener">iOS 项目的目录结构能看出你的开发经验</a></p>
 </blockquote>
 </div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2015-11-29</span><i class="fa fa-tag"></i><a class="tag" href="/categories/iOS组件化/" title="iOS组件化">iOS组件化 </a><a class="tag" href="/tags/CocoaPods/" title="CocoaPods">CocoaPods </a></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" href="http://twitter.com/home?status=,http://yehot.github.io/2015/11/29/20151129-project-contents/,yehot的技术博客,iOS工程目录结构的思考,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2016/04/05/20160405-YYFPSLabel-source-read/" title="iOS查看屏幕帧数工具--YYFPSLabel">Post Anterior</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2015/11/28/20151128-why-cocoaPods/" title="为什么iOS项目应该用CocoaPods">Próximo post</a></li></ul></div></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>
