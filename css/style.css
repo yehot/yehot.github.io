@@ -113,10 +113,11 @@ a:hover, a:active {
   float: right;
   width: 60%;
   margin-top: 60px;
+  margin-right: 10%;
 }
 
 .page-top {
-  width: 60%;
+  width: 70%;
   position: fixed;
   right: 0;
   z-index: 3;
@@ -154,6 +155,7 @@ a:hover, a:active {
 .page-top .information .avatar {
   float: right;
 }
+
 .page-top .information .avatar img {
   width: 32px;
   height: 32px;
@@ -170,7 +172,7 @@ a:hover, a:active {
 }
 
 .sidebar {
-  width: 40%;
+  width: 30%;
   -webkit-background-size: cover;
   background-size: cover;
   background-color: #fff;
@@ -194,7 +196,6 @@ a:hover, a:active {
   margin: 0 auto;
 }
 .sidebar .logo-title .title h3 {
-  text-transform: uppercase;
   font-size: 2rem;
   font-weight: bold;
   letter-spacing: 2px;
