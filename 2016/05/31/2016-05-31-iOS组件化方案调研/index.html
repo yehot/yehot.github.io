@@ -1,12 +1,72 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="yehot"><title>iOS组件化方案调研 · yehot</title><meta name="description" content="iOS组件化方案探索一、什么是组件化？什么是组件？&amp;quot;组件&amp;quot;一般来说用于命名比较小的功能块，如：下拉刷新组件、提示框组件。而较大粒度的业务功能，我们习惯称之为&amp;quot;模块&amp;quot;，如：首页模块、我的模块、新闻模块。
-这次讨论的主题是组件化，这里为了方便表述，下面模块和组件代"><meta name="keywords" content="Hexo,iOS,Swift"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title><a href="/">yehot</a></h3><div class="description"><p>野生iOS程序猿</p></div></div></div><ul class="social-links"><li><a href="http://github.com/yehot"><i class="fa fa-github"></i></a></li></ul><div class="footer"><a target="_blank" href="/"><span>Theme by </span></a><a href="https://www.caicai.me"> CaiCai </a><span>&</span><a href="https://github.com/Ben02/hexo-theme-Anatole"> Ben</a><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/archives">归档</a></li><li><a href="/about">关于</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img src="/images/avatar.png"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>iOS组件化方案调研</a></h3></div><div class="post-content"><meta name="referrer" content="no-referrer">
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="yehot"><title>iOS组件化方案调研 · yehot</title><meta name="description" content="iOS组件化方案探索
+一、什么是组件化？
+什么是组件？
+什么是组件化？
 
-<h1 id="iOS组件化方案探索"><a href="#iOS组件化方案探索" class="headerlink" title="iOS组件化方案探索"></a>iOS组件化方案探索</h1><h2 id="一、什么是组件化？"><a href="#一、什么是组件化？" class="headerlink" title="一、什么是组件化？"></a>一、什么是组件化？</h2><h3 id="什么是组件？"><a href="#什么是组件？" class="headerlink" title="什么是组件？"></a>什么是组件？</h3><p><code>&quot;组件&quot;</code>一般来说用于命名比较小的功能块，如：下拉刷新组件、提示框组件。而较大粒度的业务功能，我们习惯称之为<code>&quot;模块&quot;</code>，如：首页模块、我的模块、新闻模块。</p>
+
+二、为什么要组件化？
+组件化是为了解决什么问题？
+组件化的好处？
+什么情况下进行组件化比较合适？
+
+
+三、如何组件化？
+组件化的架构目标？
+如何划分组件？
+组件化的技术难点？
+
+
+四、其它
+开发流程控制
+组件维护问题？
+
+
+"><meta name="keywords" content="Hexo,iOS,Swift"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title><a href="/">yehot</a></h3><div class="description"><p>野生iOS程序猿</p></div></div></div><ul class="social-links"><li><a href="http://github.com/yehot"><i class="fa fa-github"></i></a></li></ul><div class="footer"><a target="_blank" href="/"><span>Theme by </span></a><a href="https://www.caicai.me"> CaiCai </a><span>&</span><a href="https://github.com/Ben02/hexo-theme-Anatole"> Ben</a><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/archives">归档</a></li><li><a href="/about">关于</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img src="/images/avatar.png"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>iOS组件化方案调研</a></h3></div><div class="post-content"><p><meta name="referrer" content="no-referrer"></p>
+<div class="toc">
+
+<!-- toc -->
+<ul>
+<li><a href="#ios组件化方案探索">iOS组件化方案探索</a><ul>
+<li><a href="#一-什么是组件化">一、什么是组件化？</a><ul>
+<li><a href="#什么是组件">什么是组件？</a></li>
+<li><a href="#什么是组件化">什么是组件化？</a></li>
+</ul>
+</li>
+<li><a href="#二-为什么要组件化">二、为什么要组件化？</a><ul>
+<li><a href="#组件化是为了解决什么问题">组件化是为了解决什么问题？</a></li>
+<li><a href="#组件化的好处">组件化的好处？</a></li>
+<li><a href="#什么情况下进行组件化比较合适">什么情况下进行组件化比较合适？</a></li>
+</ul>
+</li>
+<li><a href="#三-如何组件化">三、如何组件化？</a><ul>
+<li><a href="#组件化的架构目标">组件化的架构目标？</a></li>
+<li><a href="#如何划分组件">如何划分组件？</a></li>
+<li><a href="#组件化的技术难点">组件化的技术难点？</a></li>
+</ul>
+</li>
+<li><a href="#四-其它">四、其它</a><ul>
+<li><a href="#开发流程控制">开发流程控制</a></li>
+<li><a href="#组件维护问题">组件维护问题？</a></li>
+</ul>
+</li>
+<li><a href="#五-参考资料">五、参考资料：</a><ul>
+<li><a href="#相关技术博客">相关技术博客：</a></li>
+<li><a href="#相关解决方案">相关解决方案</a></li>
+<li><a href="#私有cocoapods实施方案">私有Cocoapods实施方案</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+</div>
+
+<h1><span id="ios组件化方案探索">iOS组件化方案探索</span><a href="#ios组件化方案探索" class="header-anchor"> </a></h1><h2><span id="一-什么是组件化">一、什么是组件化？</span><a href="#一-什么是组件化" class="header-anchor"> </a></h2><h3><span id="什么是组件">什么是组件？</span><a href="#什么是组件" class="header-anchor"> </a></h3><p><code>&quot;组件&quot;</code>一般来说用于命名比较小的功能块，如：下拉刷新组件、提示框组件。而较大粒度的业务功能，我们习惯称之为<code>&quot;模块&quot;</code>，如：首页模块、我的模块、新闻模块。</p>
 <p>这次讨论的主题是组件化，这里为了方便表述，下面模块和组件代表同一个意思，都是指较大粒度的业务模块。</p>
-<h3 id="什么是组件化？"><a href="#什么是组件化？" class="headerlink" title="什么是组件化？"></a>什么是组件化？</h3><p>组件化，或者说模块化，用来分割、组织和打包软件。每个模块完成一个特定的子功能，所有的模块按某种方法组装起来，成为一个整体，完成整个系统所要求的功能。</p>
+<h3><span id="什么是组件化">什么是组件化？</span><a href="#什么是组件化" class="header-anchor"> </a></h3><p>组件化，或者说模块化，用来分割、组织和打包软件。每个模块完成一个特定的子功能，所有的模块按某种方法组装起来，成为一个整体，完成整个系统所要求的功能。</p>
 <p>从工程代码层面来说，组件化的实施通常是通过<code>中间件</code>解决组件间头文件直接引用、依赖混乱的问题；从实际开发来说，组件之间最大的需求就是页面跳转，需要从组件A的pageA页面跳转到组件B的pageB页面，避免对组件B页面ViewController头文件的直接依赖。</p>
-<h2 id="二、为什么要组件化？"><a href="#二、为什么要组件化？" class="headerlink" title="二、为什么要组件化？"></a>二、为什么要组件化？</h2><p>从两个方面论述：</p>
-<h3 id="组件化是为了解决什么问题？"><a href="#组件化是为了解决什么问题？" class="headerlink" title="组件化是为了解决什么问题？"></a>组件化是为了解决什么问题？</h3><p>一个 APP 有多个模块，模块之间会通信，互相调用，如我们的证券app，有首页、行情、资讯、我的等模块。这些模块会互相调用，例如 首页底部需要展示部分资讯、行情；行情底部需要展示个股资讯；资讯详情页需要跳转到行情，等等。</p>
+<h2><span id="二-为什么要组件化">二、为什么要组件化？</span><a href="#二-为什么要组件化" class="header-anchor"> </a></h2><p>从两个方面论述：</p>
+<h3><span id="组件化是为了解决什么问题">组件化是为了解决什么问题？</span><a href="#组件化是为了解决什么问题" class="header-anchor"> </a></h3><p>一个 APP 有多个模块，模块之间会通信，互相调用，如我们的证券app，有首页、行情、资讯、我的等模块。这些模块会互相调用，例如 首页底部需要展示部分资讯、行情；行情底部需要展示个股资讯；资讯详情页需要跳转到行情，等等。</p>
 <p>一般我们是怎样调用呢，以首页调用资讯为例，会这样写：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;HomeViewController.h&quot;</span><br><span class="line">#import &quot;NewsViewController.h&quot;</span><br><span class="line"></span><br><span class="line">@implementation HomeViewController</span><br><span class="line"></span><br><span class="line">+ (void)gotoNews &#123;</span><br><span class="line"></span><br><span class="line"> NewsViewController *detailVC = [[NewsViewController alloc] initWithStockCode:self.codeNum];</span><br><span class="line"> [self.navigationController.pushViewController:detailVC animated:YES];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
 <p>看起来挺好，这样做简单明了，没有多余的东西，项目初期推荐这样快速开发，但到了项目越来越庞大，这种方式会有什么问题呢？</p>
@@ -19,7 +79,7 @@
 <li>问题2，多人同时开发时，容易出现冲突（尤其是Xcode Project文件）</li>
 <li>问题3，业务方的开发效率不够高（只关心自己的组件，却要编译整个项目，与其他不相干的代码糅合在一起）</li>
 </ul>
-<h3 id="组件化的好处？"><a href="#组件化的好处？" class="headerlink" title="组件化的好处？"></a>组件化的好处？</h3><p><strong>一般意义：</strong></p>
+<h3><span id="组件化的好处">组件化的好处？</span><a href="#组件化的好处" class="header-anchor"> </a></h3><p><strong>一般意义：</strong></p>
 <ul>
 <li>加快编译速度（不用编译主客那一大坨代码了）；</li>
 <li>各组件自由选择开发姿势（MVC / MVVM / FRP）；</li>
@@ -35,7 +95,7 @@
 <li>模块化对代码的封装性、合理性都有一定的要求，提升开发同学的设计能力；</li>
 <li>在维护好各级组件的情况下，随意组合满足不同客户需求；（只需要将之前的多个业务组件模块在新的主App中进行组装即可快速迭代出下一个全新App）</li>
 </ul>
-<h3 id="什么情况下进行组件化比较合适？"><a href="#什么情况下进行组件化比较合适？" class="headerlink" title="什么情况下进行组件化比较合适？"></a>什么情况下进行组件化比较合适？</h3><p>当然组件化也有它的缺点：</p>
+<h3><span id="什么情况下进行组件化比较合适">什么情况下进行组件化比较合适？</span><a href="#什么情况下进行组件化比较合适" class="header-anchor"> </a></h3><p>当然组件化也有它的缺点：</p>
 <ul>
 <li><p>学习成本高，对于开发人员对各种工具的掌握要求也比较高，对于新手来说入门较为困难。</p>
 </li>
@@ -45,12 +105,12 @@
 <p>当项目App处于起步阶段、各个需求模块趋于成熟稳定的过程中，组件化也许并没有那么迫切，甚至考虑组件化的架构可能会影响开发效率和需求迭代。</p>
 <p>而当项目迭代到一定时期之后，便会出现一些相对独立的业务功能模块，而团队的规模也会随着项目迭代逐渐增长，这便是中小型应用考虑组件化的时机了。这时为了更好的分工协作，团队安排团队成员各自维护一个相对独立的业务组件是比较常见的做法。</p>
 <p>在这时这个时候来引入组件化方案，是比较合适的时机。长远来看，组件化带来的好处是远远大于坏处的，特别是随着项目的规模增大，这种好处会变得越来越明显</p>
-<h2 id="三、如何组件化？"><a href="#三、如何组件化？" class="headerlink" title="三、如何组件化？"></a>三、如何组件化？</h2><blockquote>
+<h2><span id="三-如何组件化">三、如何组件化？</span><a href="#三-如何组件化" class="header-anchor"> </a></h2><blockquote>
 <p>组件化的开展需要解决以下几个层次的问题：</p>
 </blockquote>
-<h3 id="组件化的架构目标？"><a href="#组件化的架构目标？" class="headerlink" title="组件化的架构目标？"></a>组件化的架构目标？</h3><p>借用Limboy的图：</p>
+<h3><span id="组件化的架构目标">组件化的架构目标？</span><a href="#组件化的架构目标" class="header-anchor"> </a></h3><p>借用Limboy的图：</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/332029-4c7b8e152db83b9f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="组件化架构.png"></p>
-<h3 id="如何划分组件？"><a href="#如何划分组件？" class="headerlink" title="如何划分组件？"></a>如何划分组件？</h3><ul>
+<h3><span id="如何划分组件">如何划分组件？</span><a href="#如何划分组件" class="header-anchor"> </a></h3><ul>
 <li>基础功能组件</li>
 <li>基础产品组件</li>
 <li>个性化业务组件</li>
@@ -69,15 +129,15 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- BusinessA</span><br><span class="line">  - Model</span><br><span class="line">  - View</span><br><span class="line">  - Controller</span><br><span class="line">  - Store</span><br><span class="line">- BusinessB</span><br><span class="line">  - Model</span><br><span class="line">  - View</span><br><span class="line">  - Controller</span><br><span class="line">  -Store</span><br></pre></td></tr></table></figure>
 <p>而非目前项目中采用的：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- Controllers</span><br><span class="line">  - BusinessA_Controller</span><br><span class="line">  - BusinessB_Controller</span><br><span class="line">- Views</span><br><span class="line">  - BusinessA_View</span><br><span class="line">  - BusinessB_View</span><br><span class="line">- Models</span><br><span class="line">  - BusinessA_Model</span><br><span class="line">  - BusinessB_Model</span><br></pre></td></tr></table></figure>
-<h3 id="组件化的技术难点？"><a href="#组件化的技术难点？" class="headerlink" title="组件化的技术难点？"></a>组件化的技术难点？</h3><blockquote>
+<h3><span id="组件化的技术难点">组件化的技术难点？</span><a href="#组件化的技术难点" class="header-anchor"> </a></h3><blockquote>
 <p>组件化的实施，直观上看，只是需要将各业务组件的代码放到各自的文件夹或者 jar包里就行了。</p>
 </blockquote>
 <p>这里引出的是：</p>
-<h4 id="1、组件的拆分方式问题："><a href="#1、组件的拆分方式问题：" class="headerlink" title="1、组件的拆分方式问题："></a>1、组件的拆分方式问题：</h4><p>可以利用CocoaPods 配合 git 做代码版本管理，独立业务模块单独成库。</p>
+<h4><span id="1-组件的拆分方式问题">1、组件的拆分方式问题：</span><a href="#1-组件的拆分方式问题" class="header-anchor"> </a></h4><p>可以利用CocoaPods 配合 git 做代码版本管理，独立业务模块单独成库。</p>
 <p>但这仅仅是物理上拆分了，拆分后的代码编译是肯定通不过的，因为如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#import &quot;MainViewController.h&quot;</span><br><span class="line">#import &quot;HomeViewController.h&quot;</span><br><span class="line">#import &quot;NewsViewController.h&quot;</span><br><span class="line">#import &quot;MeViewController.h&quot;</span><br><span class="line">#import ...</span><br><span class="line"></span><br><span class="line">@implementation MainViewController</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
 <p><code>MainViewController</code> 会找不到依赖的其它各个模块的头文件而报错。这里引出的又是另一个问题：</p>
-<h4 id="2、组件间如何解耦？"><a href="#2、组件间如何解耦？" class="headerlink" title="2、组件间如何解耦？"></a>2、组件间如何解耦？</h4><p>组件间解耦，是组件化必须解决的一个问题。换句话说，就是如何解除业务模块间的横向依赖。还是拿上边举得例子来说：</p>
+<h4><span id="2-组件间如何解耦">2、组件间如何解耦？</span><a href="#2-组件间如何解耦" class="header-anchor"> </a></h4><p>组件间解耦，是组件化必须解决的一个问题。换句话说，就是如何解除业务模块间的横向依赖。还是拿上边举得例子来说：</p>
 <p>App的根视图<code>MainViewController</code>需要管理首页、新闻、我的等等页面时，如何做到 <code>MainViewController</code> 中，不用去 <code>import</code>这一大堆 <code>XXViewController</code> ?</p>
 <p>很简单，按软件工程的思路，下意识就会加一个中间层Mediator：</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/332029-bd66e6dac09f2e08.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="中间层.png"></p>
@@ -95,7 +155,7 @@
 <p>具体实现方案较为抽象，这里暂时先不详细展开论述，可以参见Demo：</p>
 <p><a href="https://github.com/yehot/CTMediator" target="_blank" rel="noopener">Demo1 基于 Target-Action</a></p>
 <p><a href="https://github.com/yehot/routable-ios" target="_blank" rel="noopener">Demo2 基于 URL Router</a></p>
-<h2 id="四、其它"><a href="#四、其它" class="headerlink" title="四、其它"></a>四、其它</h2><h3 id="开发流程控制"><a href="#开发流程控制" class="headerlink" title="开发流程控制"></a>开发流程控制</h3><blockquote>
+<h2><span id="四-其它">四、其它</span><a href="#四-其它" class="header-anchor"> </a></h2><h3><span id="开发流程控制">开发流程控制</span><a href="#开发流程控制" class="header-anchor"> </a></h3><blockquote>
 <p>托管平台选择</p>
 </blockquote>
 <p>自己利用开源的方案搭建私有的托管平台，可以最大限制地保证代码的安全。开源方案当中最知名也是最为广泛使用的当属 Gitlab。</p>
@@ -103,8 +163,8 @@
 <p>不管是对于主仓库和子模块仓库，git-flow 都是首先推荐的工作流程。一个仓库的 master 分支只有所有者可以有权限更改，其他的贡献者想更改的话，需要自己创建新的分支（在 Github 上就是进行 fork），然后进行更改，之后把更改向原仓库发送 Pull Request。Pull Request 就是一个合并的请求，其中可以看到贡献者的更改，项目主人和其他维护者可以对 Pull Request 进行审核，共同探讨修改意见。当项目主人认为修改 OK 之后，就可以合并这个 Pull Request ，把这部分代码合并到主分支。</p>
 <p>这个流程是完全分布式的，也就是说可以同时有多个贡献者在不同的分支进行工作，最后统一合并到主分支上，实现并行协作。</p>
 <p>同时在审核 Pull Request 阶段，除了人工审核代码之外，Github 还加入了对于持续集成的支持，可以检测这个 Pull Request 是不是能够通过测试的，进一步保证了代码的质量。</p>
-<h3 id="组件维护问题？"><a href="#组件维护问题？" class="headerlink" title="组件维护问题？"></a>组件维护问题？</h3><p>待补充</p>
-<h2 id="五、参考资料："><a href="#五、参考资料：" class="headerlink" title="五、参考资料："></a>五、参考资料：</h2><h3 id="相关技术博客："><a href="#相关技术博客：" class="headerlink" title="相关技术博客："></a>相关技术博客：</h3><p>1、<a href="http://casatwy.com/iOS-Modulization.html?hmsr=toutiao.io&amp;utm_medium=toutiao.io&amp;utm_source=toutiao.io" target="_blank" rel="noopener">iOS应用架构谈 组件化方案</a></p>
+<h3><span id="组件维护问题">组件维护问题？</span><a href="#组件维护问题" class="header-anchor"> </a></h3><p>待补充</p>
+<h2><span id="五-参考资料">五、参考资料：</span><a href="#五-参考资料" class="header-anchor"> </a></h2><h3><span id="相关技术博客">相关技术博客：</span><a href="#相关技术博客" class="header-anchor"> </a></h3><p>1、<a href="http://casatwy.com/iOS-Modulization.html?hmsr=toutiao.io&amp;utm_medium=toutiao.io&amp;utm_source=toutiao.io" target="_blank" rel="noopener">iOS应用架构谈 组件化方案</a></p>
 <p>2、<a href="http://limboy.me/ios/2016/03/10/mgj-components.html" target="_blank" rel="noopener">蘑菇街 App 的组件化之路</a></p>
 <p><a href="http://limboy.me/ios/2016/03/14/mgj-components-continued.html" target="_blank" rel="noopener">蘑菇街 App 的组件化之路·续</a></p>
 <p>3、<a href="http://blog.cnbang.net/tech/3080/" target="_blank" rel="noopener">iOS 组件化方案探索</a></p>
@@ -116,13 +176,13 @@
 <p>9、<a href="http://www.aliog.com/101363.html" target="_blank" rel="noopener">ios业务模块间互相跳转的解耦方案</a></p>
 <p>10、<a href="http://cdn0.jianshu.io/p/afb9b52143d4" target="_blank" rel="noopener">iOS组件化思路－大神博客研读和思考</a></p>
 <p>11、<a href="https://blog.cnbluebox.com/blog/2015/11/28/module-and-decoupling/" target="_blank" rel="noopener">模块化与解耦</a></p>
-<h3 id="相关解决方案"><a href="#相关解决方案" class="headerlink" title="相关解决方案"></a>相关解决方案</h3><p>1、<a href="https://github.com/casatwy/CTMediator" target="_blank" rel="noopener">casatwy/CTMediator</a></p>
+<h3><span id="相关解决方案">相关解决方案</span><a href="#相关解决方案" class="header-anchor"> </a></h3><p>1、<a href="https://github.com/casatwy/CTMediator" target="_blank" rel="noopener">casatwy/CTMediator</a></p>
 <p>2、<a href="https://github.com/mogujie/MGJRouter" target="_blank" rel="noopener">mogujie/MGJRouter</a></p>
 <p>3、<a href="https://github.com/joeldev/JLRoutes" target="_blank" rel="noopener">joeldev/JLRoutes</a></p>
 <p>4、<a href="https://github.com/Huohua/HHRouter" target="_blank" rel="noopener">Huohua/HHRouter</a></p>
 <p>5、<a href="https://github.com/clayallsopp/routable-ios" target="_blank" rel="noopener">clayallsopp/routable-ios</a></p>
 <p>6、<a href="https://github.com/Lede-Inc/LDBusBundle_IOS" target="_blank" rel="noopener">Lede-Inc/LDBusBundle_IOS</a></p>
-<h3 id="私有Cocoapods实施方案"><a href="#私有Cocoapods实施方案" class="headerlink" title="私有Cocoapods实施方案"></a>私有Cocoapods实施方案</h3><p>1、<a href="http://blog.wtlucky.com/blog/2015/02/26/create-private-podspec/" target="_blank" rel="noopener">使用Cocoapods创建私有podspec - GeekerProbe</a></p>
+<h3><span id="私有cocoapods实施方案">私有Cocoapods实施方案</span><a href="#私有cocoapods实施方案" class="header-anchor"> </a></h3><p>1、<a href="http://blog.wtlucky.com/blog/2015/02/26/create-private-podspec/" target="_blank" rel="noopener">使用Cocoapods创建私有podspec - GeekerProbe</a></p>
 <p>2、<a href="http://www.pluto-y.com/cocoapod-private-pods-and-module-manager/" target="_blank" rel="noopener">Cocoapods系列教程(三)——私有库管理和模块化管理</a></p>
 <p>3、<a href="http://www.jianshu.com/p/196f66d31543" target="_blank" rel="noopener">iOS组件化实践方案－LDBusMediator炼就</a></p>
 <p>4、<a href="https://skyline75489.github.io/post/2016-3-19_ios_modularization_practice.html" target="_blank" rel="noopener">基于 CocoaPods 和 Git 的 iOS 工程组件化实践</a></p>
