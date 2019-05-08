@@ -19,30 +19,20 @@ iOS组件化方案探索
 组件化的架构目标？
 如何划分组件？
 组件化的技术难点？
+1、组件的拆分方式问题：
+2、组件间如何解耦？
 
 
-四、其它
-开发流程控制
-组件维护问题？
-
-
-五、...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2016-05-31</span><i class="fa fa-tag"></i><a class="tag" href="/categories/iOS组件化/" title="iOS组件化">iOS组件化 </a><a class="tag" href="/tags/CocoaPods/" title="CocoaPods">CocoaPods </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2016/04/05/2016-04-05-iOS查看屏幕帧数工具YYFPSLabel/">iOS查看屏幕帧数工具--YYFPSLabel</a></h3></div><div class="post-content"><p>
+...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2016-05-31</span><i class="fa fa-tag"></i><a class="tag" href="/categories/iOS组件化/" title="iOS组件化">iOS组件化 </a><a class="tag" href="/tags/CocoaPods/" title="CocoaPods">CocoaPods </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2016/04/05/2016-04-05-iOS查看屏幕帧数工具YYFPSLabel/">iOS查看屏幕帧数工具--YYFPSLabel</a></h3></div><div class="post-content"><p>
 
 
 
 
 一、FPSLabel 实现思路：
 二、NSTimer、CADisplayLink 常见问题：
-三、探索环节：iOS中子线程检测主线程
-四、补充：
-
-
-
-
-学习 YYKit 代码时，发现 ibireme 在项目里加入的一个查看当前屏幕帧数的小工具，效果如下：
-
-挺实用，实现方法也很简单，但是思路特别棒。
-...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2016-04-05</span><i class="fa fa-tag"></i><a class="tag" href="/categories/Tool/" title="Tool">Tool </a><a class="tag" href="/tags/iOS/" title="iOS">iOS </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2015/11/29/2015-11-29-iOS工程目录结构的思考/">iOS工程目录结构的思考</a></h3></div><div class="post-content"><p>
+2.1 问题一： UIScrollView 在滑动时，timer 会被暂停的问题。
+2.2 问题二：NSTimer 对于 target 的循环引用问题：
+2.3 解决办法1：在页面退出前，或者合适的时候，手动停...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2016-04-05</span><i class="fa fa-tag"></i><a class="tag" href="/categories/Tool/" title="Tool">Tool </a><a class="tag" href="/tags/iOS/" title="iOS">iOS </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2015/11/29/2015-11-29-iOS工程目录结构的思考/">iOS工程目录结构的思考</a></h3></div><div class="post-content"><p>
 
 
 
@@ -75,6 +65,9 @@ iOS组件化方案探索
 二、解决方案的探索:
 方案一：
 方案二：
+笔记如下：
+
+
 方案三：
 
 
@@ -90,7 +83,7 @@ CocoaPods高阶用法：
 
 为什么iOS项目中应该使用CocoaPods作为第三方依赖管理工具？
 
-一、从一个bug说起： 1、公司的项目里统一使用...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2015-11-28</span><i class="fa fa-tag"></i><a class="tag" href="/categories/iOS组件化/" title="iOS组件化">iOS组件化 </a><a class="tag" href="/tags/CocoaPods/" title="CocoaPods">CocoaPods </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2015/09/09/2015-09-09-自定义可配置开关的NSLog/">自定义可配置开关的NSLog</a></h3></div><div class="post-content"><p>
+一、从一个bug说起： 1、公司...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2015-11-28</span><i class="fa fa-tag"></i><a class="tag" href="/categories/iOS组件化/" title="iOS组件化">iOS组件化 </a><a class="tag" href="/tags/CocoaPods/" title="CocoaPods">CocoaPods </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2015/09/09/2015-09-09-自定义可配置开关的NSLog/">自定义可配置开关的NSLog</a></h3></div><div class="post-content"><p>
 
 参考：iOS自定义NSLog日志
 
